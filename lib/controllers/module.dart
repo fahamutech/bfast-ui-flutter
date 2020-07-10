@@ -1,17 +1,18 @@
 import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
+import 'package:bfastui/adapters/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ModuleController extends ModuleAdapter {
   final String path;
-  List<Bind> _services;
+  List<StateAdapter> _services;
   List<RouterAdapter> _routers;
 
   ModuleController({
     this.path = '/',
-    List<Bind> services,
+    List<StateAdapter> services,
     List<RouterAdapter> routers,
   }) {
     this._services = services;
@@ -19,7 +20,13 @@ class ModuleController extends ModuleAdapter {
   }
 
   @override
-  List<Bind> get binds => this._services != null ? this._services : [];
+  List<Bind> get binds => (this._services != null)
+      ? this
+          ._services
+          .map<Bind>(
+              (e) => Bind(e.inject, singleton: e.singleton, lazy: e.lazy))
+          .toList()
+      : [];
 
   @override
   Widget get bootstrap => _AppWidget(this.path);
@@ -42,8 +49,13 @@ class ModuleController extends ModuleAdapter {
       : [];
 
   @override
-  start({bool ios = false}) {
-    ModularApp(module: this, isCupertino: ios);
+  start({bool isCupertino = false}) {
+    ModularApp(module: this, isCupertino: isCupertino);
+  }
+
+  @override
+  ModuleAdapter getModule() {
+    return this;
   }
 }
 
