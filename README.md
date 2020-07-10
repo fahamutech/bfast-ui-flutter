@@ -1,4 +1,4 @@
-# bfastflutterui
+# BFastUI
 
 BFast Ui manage sdk for flutter
 
