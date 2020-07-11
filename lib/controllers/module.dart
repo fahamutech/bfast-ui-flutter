@@ -24,7 +24,7 @@ class BFastUIModuleController extends BFastUIModule {
       ? this
           ._services
           .map<Bind>(
-              (e) => Bind(e.inject, singleton: e.singleton, lazy: e.lazy))
+              (e) => Bind((_)=>e, singleton: e.singleton, lazy: e.lazy))
           .toList()
       : [];
 

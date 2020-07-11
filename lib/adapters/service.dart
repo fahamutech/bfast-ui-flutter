@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 abstract class BFastUIService extends ChangeNotifier {
-  String _name;
+  // ignore: non_constant_identifier_names
+  String _service__name_;
   bool singleton;
   bool lazy;
-  Function(Inject<dynamic> i) inject;
 
-  BFastUIService(this._name, {this.singleton, this.lazy, this.inject});
+  BFastUIService(this._service__name_,
+      {this.singleton = true, this.lazy = true});
 
-  String get serviceName => this._name;
+  String get serviceName => this._service__name_;
 }
