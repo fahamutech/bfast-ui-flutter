@@ -12,9 +12,9 @@ class NavigationController {
 
   NavigationController._();
 
-  Map<String, List<RouterAdapter>> _routes = {};
+  Map<String, List<BFastUIRouter>> _routes = {};
 
-  NavigationController addRoute(RouterAdapter route,
+  NavigationController addRoute(BFastUIRouter route,
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     if (this._routes.containsKey(moduleName)) {
       this._routes[moduleName].add(route);
@@ -24,13 +24,13 @@ class NavigationController {
     return this;
   }
 
-  NavigationController addRoutes(List<RouterAdapter> routes,
+  NavigationController addRoutes(List<BFastUIRouter> routes,
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     this._routes[moduleName] = routes;
     return this;
   }
 
-  List<RouterAdapter> getServices(
+  List<BFastUIRouter> getRoutes(
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     return this._routes[moduleName];
   }

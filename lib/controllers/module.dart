@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ModuleController extends ModuleAdapter {
+class ModuleController extends BFastUIModule {
   final String path;
-  List<StateAdapter> _services;
-  List<RouterAdapter> _routers;
+  List<BFastUIService> _services;
+  List<BFastUIRouter> _routers;
 
   ModuleController({
     this.path = '/',
-    List<StateAdapter> services,
-    List<RouterAdapter> routers,
+    List<BFastUIService> services,
+    List<BFastUIRouter> routers,
   }) {
     this._services = services;
     this._routers = routers;
@@ -38,7 +38,7 @@ class ModuleController extends ModuleAdapter {
           .map<Router>((e) => Router(
                 this.path,
                 module: e.module,
-                child: (context, args) => e.page(context, args).widget,
+                child: (context, args) => e.page(context, args).build(args),
                 params: e.params,
                 guards: e.guards,
                 modulePath: e.modulePath,
@@ -54,7 +54,7 @@ class ModuleController extends ModuleAdapter {
   }
 
   @override
-  ModuleAdapter getModule() {
+  BFastUIModule getModule() {
     return this;
   }
 }

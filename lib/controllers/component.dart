@@ -3,9 +3,9 @@ import 'package:bfastui/adapters/service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ComponentController extends ComponentAdapter {
+class BFastUIComponentController extends BFastUIComponent {
   @override
-  consumer<T extends StateAdapter>(
+  consumer<T extends BFastUIService>(
       final Widget Function(BuildContext context, T state) builder) {
     return Consumer<T>(
       builder: builder,
@@ -18,6 +18,6 @@ class ComponentController extends ComponentAdapter {
   }
 }
 
-abstract class BFastUIConsumer<T> extends Widget {
-  build(T model);
-}
+//abstract class BFastUIConsumer<T> extends Widget {
+//  build(T model);
+//}

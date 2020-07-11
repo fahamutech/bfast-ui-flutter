@@ -2,18 +2,18 @@ import 'package:bfastui/adapters/service.dart';
 
 import '../config.dart';
 
-class StateController {
-  static final StateController _instance = StateController._();
+class BFastUIServiceController {
+  static final BFastUIServiceController _instance = BFastUIServiceController._();
 
-  factory StateController.getInstance() {
+  factory BFastUIServiceController.getInstance() {
     return _instance;
   }
 
-  StateController._();
+  BFastUIServiceController._();
 
-  Map<String, List<StateAdapter>> _services = {};
+  Map<String, List<BFastUIService>> _services = {};
 
-  StateController addService(StateAdapter service,
+  BFastUIServiceController addService(BFastUIService service,
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     if (this._services.containsKey(moduleName)) {
       this._services[moduleName].add(service);
@@ -23,18 +23,18 @@ class StateController {
     return this;
   }
 
-  StateController addServices(List<StateAdapter> services,
+  BFastUIServiceController addServices(List<BFastUIService> services,
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     this._services[moduleName] = services;
     return this;
   }
 
-  List<StateAdapter> getServices(
+  List<BFastUIService> getServices(
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     return this._services[moduleName];
   }
 
-  T getServiceByName<T extends StateAdapter>(String name,
+  T getServiceByName<T extends BFastUIService>(String name,
       {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     if (this._services.containsKey(moduleName)) {
       int serviceIndex = this
