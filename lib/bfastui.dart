@@ -1,5 +1,6 @@
 library bfastui;
 
+import 'package:bfastui/adapters/component.dart';
 import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/adapters/service.dart';
@@ -16,11 +17,12 @@ class BFastUI {
     List<BFastUIService> services,
     List<BFastUIRouter> routes,
   }) {
-    return ModuleController(path: path, services: services, routers: routes);
+    return BFastUIModuleController(
+        path: path, services: services, routers: routes);
   }
 
   static NavigationController navigation(
-  {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
+      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     return NavigationController.getInstance();
   }
 
@@ -28,11 +30,13 @@ class BFastUI {
 //    return PageController(moduleName);
 //  }
 
-  static BFastUIServiceController state({String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
+  static BFastUIServiceController state(
+      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     return BFastUIServiceController.getInstance();
   }
 
-  static component({String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
+  static BFastUIComponent component(
+      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     return BFastUIComponentController();
   }
 }

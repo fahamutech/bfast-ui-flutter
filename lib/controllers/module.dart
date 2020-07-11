@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ModuleController extends BFastUIModule {
+class BFastUIModuleController extends BFastUIModule {
   final String path;
   List<BFastUIService> _services;
   List<BFastUIRouter> _routers;
 
-  ModuleController({
+  BFastUIModuleController({
     this.path = '/',
     List<BFastUIService> services,
     List<BFastUIRouter> routers,
@@ -49,8 +49,8 @@ class ModuleController extends BFastUIModule {
       : [];
 
   @override
-  start({bool isCupertino = false}) {
-    ModularApp(module: this, isCupertino: isCupertino);
+  StatefulWidget start({bool isCupertino = false}) {
+    return ModularApp(module: this.getModule(), isCupertino: isCupertino);
   }
 
   @override

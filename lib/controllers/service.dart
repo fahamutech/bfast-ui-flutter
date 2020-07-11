@@ -39,7 +39,7 @@ class BFastUIServiceController {
     if (this._services.containsKey(moduleName)) {
       int serviceIndex = this
           ._services[moduleName]
-          .indexWhere((element) => element.name == name);
+          .indexWhere((element) => element.serviceName == name);
       if (serviceIndex != null && serviceIndex != -1) {
         return this._services[moduleName][serviceIndex];
       } else {

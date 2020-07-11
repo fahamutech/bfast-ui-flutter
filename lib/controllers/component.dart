@@ -17,7 +17,3 @@ class BFastUIComponentController extends BFastUIComponent {
     return widget;
   }
 }
-
-//abstract class BFastUIConsumer<T> extends Widget {
-//  build(T model);
-//}
