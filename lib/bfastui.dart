@@ -30,7 +30,7 @@ class BFastUI {
 //    return PageController(moduleName);
 //  }
 
-  static BFastUIServiceController state(
+  static BFastUIServiceController services(
       {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     return BFastUIServiceController.getInstance();
   }

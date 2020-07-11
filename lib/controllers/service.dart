@@ -3,7 +3,8 @@ import 'package:bfastui/adapters/service.dart';
 import '../config.dart';
 
 class BFastUIServiceController {
-  static final BFastUIServiceController _instance = BFastUIServiceController._();
+  static final BFastUIServiceController _instance =
+      BFastUIServiceController._();
 
   factory BFastUIServiceController.getInstance() {
     return _instance;
@@ -14,7 +15,7 @@ class BFastUIServiceController {
   Map<String, List<BFastUIService>> _services = {};
 
   BFastUIServiceController addService(BFastUIService service,
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
+      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
     if (this._services.containsKey(moduleName)) {
       this._services[moduleName].add(service);
     } else {
@@ -23,11 +24,11 @@ class BFastUIServiceController {
     return this;
   }
 
-  BFastUIServiceController addServices(List<BFastUIService> services,
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-    this._services[moduleName] = services;
-    return this;
-  }
+//  BFastUIServiceController addServices(List<BFastUIService> services,
+//      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
+//    this._services[moduleName] = services;
+//    return this;
+//  }
 
   List<BFastUIService> getServices(
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
