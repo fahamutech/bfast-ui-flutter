@@ -2,9 +2,9 @@ import 'package:bfastui/adapters/page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-abstract class RouterAdapter {
+class BFastUIRouter {
   final String routerName;
-  final PageAdapter Function(BuildContext context, ModularArguments args) page;
+  final BFastUIPage Function(BuildContext context, ModularArguments args) page;
   final ChildModule module;
   Map<String, String> params;
   final List<RouteGuard> guards;
@@ -13,7 +13,7 @@ abstract class RouterAdapter {
   final String modulePath;
   final Future<bool> Function(BuildContext context) before;
 
-  RouterAdapter(
+  BFastUIRouter(
     this.routerName, {
     this.module,
     this.page,
@@ -25,14 +25,3 @@ abstract class RouterAdapter {
     this.modulePath,
   });
 }
-
-//class RouterArgs {
-//  final Map<String, dynamic> params;
-//  final dynamic data;
-//
-//  RouterArgs(this.params, this.data);
-//
-//  RouterArgs copy() {
-//    return RouterArgs(params, data);
-//  }
-//}

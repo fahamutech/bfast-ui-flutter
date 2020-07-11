@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-abstract class StateAdapter extends ChangeNotifier {
+abstract class BFastUIService extends ChangeNotifier {
   String name;
   bool singleton;
   bool lazy;
   Function(Inject<dynamic> i) inject;
-  StateAdapter(this.name);
+  BFastUIService(this.name);
 }

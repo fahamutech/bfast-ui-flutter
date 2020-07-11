@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-abstract class PageAdapter {
-  Widget widget;
-  Scaffold scaffold(Scaffold scaffold);
-
-  Widget custom(Widget widget);
+abstract class BFastUIPage {
+  Widget build(ModularArguments args);
 }
