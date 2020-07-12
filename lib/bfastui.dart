@@ -2,8 +2,6 @@ library bfastui;
 
 import 'package:bfastui/adapters/component.dart';
 import 'package:bfastui/adapters/module.dart';
-import 'package:bfastui/adapters/router.dart';
-import 'package:bfastui/adapters/service.dart';
 import 'package:bfastui/config.dart';
 import 'package:bfastui/controllers/component.dart';
 import 'package:bfastui/controllers/module.dart';
@@ -14,11 +12,11 @@ class BFastUI {
   static BFastUIModule module({
     String name = BFastUIConfig.DEFAULT_MODULE,
     path = '/',
-    List<BFastUIService> services,
-    List<BFastUIRouter> routes,
   }) {
     return BFastUIModuleController(
-        path: path, services: services, routers: routes);
+      moduleName: name,
+      path: path,
+    );
   }
 
   static NavigationController navigation(

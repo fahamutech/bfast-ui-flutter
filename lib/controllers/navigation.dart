@@ -5,34 +5,34 @@ import '../config.dart';
 
 class NavigationController {
   static final NavigationController _instance = NavigationController._();
+  static String _moduleName = BFastUIConfig.DEFAULT_MODULE;
 
-  factory NavigationController.getInstance() {
+  factory NavigationController.getInstance(
+      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
+    _moduleName = moduleName;
     return _instance;
   }
 
   NavigationController._();
 
-  Map<String, List<BFastUIRouter>> _routes = {};
+  static final Map<String, List<BFastUIRouter>> _routes = {};
 
-  NavigationController addRoute(BFastUIRouter route,
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-    if (this._routes.containsKey(moduleName)) {
-      this._routes[moduleName].add(route);
+  NavigationController addRoute(BFastUIRouter route) {
+    if (_routes.containsKey(_moduleName)) {
+      _routes[_moduleName].add(route);
     } else {
-      this._routes[moduleName] = [route];
+      _routes[_moduleName] = [route];
     }
     return this;
   }
 
-  NavigationController addRoutes(List<BFastUIRouter> routes,
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-    this._routes[moduleName] = routes;
+  NavigationController addRoutes(List<BFastUIRouter> routes) {
+    _routes[_moduleName] = routes;
     return this;
   }
 
-  List<BFastUIRouter> getRoutes(
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-    return this._routes[moduleName];
+  List<BFastUIRouter> getRoutes() {
+    return _routes[_moduleName];
   }
 
   to(String route) {
