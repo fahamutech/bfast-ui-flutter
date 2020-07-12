@@ -1,4 +1,5 @@
 import 'package:bfastui/adapters/state.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../config.dart';
 
@@ -16,31 +17,28 @@ class BFastUIStateController {
 
   static final Map<String, List<BFastUIStateBinder>> _states = {};
 
-  BFastUIStateController addState(BFastUIStateBinder stateBinder) {
+  BFastUIStateController addState<T extends BFastUIState>(
+      BFastUIStateBinder<T> bind) {
+    print(T);
+    assert(T != null, "State type required");
     if (_states.containsKey(_moduleName)) {
-      _states[_moduleName].add(stateBinder);
+      _states[_moduleName].add(bind);
     } else {
-      _states[_moduleName] = [stateBinder];
+      _states[_moduleName] = [bind];
     }
     return this;
   }
 
-//  BFastUIServiceController addServices(List<BFastUIService> services,
-//      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-//    this._services[moduleName] = services;
-//    return this;
-//  }
-
-  List<BFastUIStateBinder> getStates() {
+  List<BFastUIStateBinder> getAll() {
     return _states[_moduleName];
   }
 
   T getStateByName<T extends BFastUIState>(String name) {
     if (_states.containsKey(_moduleName)) {
-      int serviceIndex = _states[_moduleName]
-          .indexWhere((element) => element.injector().serviceName == name);
+      int serviceIndex =
+          _states[_moduleName].indexWhere((element) => element.name == name);
       if (serviceIndex != null && serviceIndex != -1) {
-        return _states[_moduleName][serviceIndex].injector();
+        return _states[_moduleName][serviceIndex].inject(null) as T;
       } else {
         throw "service not found";
       }
@@ -50,14 +48,10 @@ class BFastUIStateController {
   }
 }
 
-class BFastUIStateBinder {
-  T Function<T extends BFastUIState>() injector;
-  bool singleton = true;
-  bool lazy = true;
+class BFastUIStateBinder<T> extends Bind<T> {
+  String name;
 
-  BFastUIStateBinder(
-    this.injector, {
-    this.singleton = true,
-    this.lazy = true,
-  });
+  BFastUIStateBinder(T Function(Inject i) inject, this.name,
+      {bool singleton = true, bool lazy = true})
+      : super(inject, singleton: singleton, lazy: lazy);
 }
