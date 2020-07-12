@@ -5,21 +5,23 @@ import '../config.dart';
 class BFastUIServiceController {
   static final BFastUIServiceController _instance =
       BFastUIServiceController._();
+  static String _moduleName = BFastUIConfig.DEFAULT_MODULE;
 
-  factory BFastUIServiceController.getInstance() {
+  factory BFastUIServiceController.getInstance(
+      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
+    _moduleName = moduleName;
     return _instance;
   }
 
   BFastUIServiceController._();
 
-  Map<String, List<BFastUIService>> _services = {};
+  static final Map<String, List<BFastUIService>> _services = {};
 
-  BFastUIServiceController addService(BFastUIService service,
-      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
-    if (this._services.containsKey(moduleName)) {
-      this._services[moduleName].add(service);
+  BFastUIServiceController addService(BFastUIService service) {
+    if (_services.containsKey(_moduleName)) {
+      _services[_moduleName].add(service);
     } else {
-      this._services[moduleName] = [service];
+      _services[_moduleName] = [service];
     }
     return this;
   }
@@ -30,19 +32,16 @@ class BFastUIServiceController {
 //    return this;
 //  }
 
-  List<BFastUIService> getServices(
-      [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
-    return this._services[moduleName];
+  List<BFastUIService> getServices() {
+    return _services[_moduleName];
   }
 
-  T getServiceByName<T extends BFastUIService>(String name,
-      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
-    if (this._services.containsKey(moduleName)) {
-      int serviceIndex = this
-          ._services[moduleName]
+  T getServiceByName<T extends BFastUIService>(String name) {
+    if (_services.containsKey(_moduleName)) {
+      int serviceIndex = _services[_moduleName]
           .indexWhere((element) => element.serviceName == name);
       if (serviceIndex != null && serviceIndex != -1) {
-        return this._services[moduleName][serviceIndex];
+        return _services[_moduleName][serviceIndex];
       } else {
         throw "service not found";
       }

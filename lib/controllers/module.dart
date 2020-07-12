@@ -1,30 +1,25 @@
 import 'package:bfastui/adapters/module.dart';
-import 'package:bfastui/adapters/router.dart';
-import 'package:bfastui/adapters/service.dart';
+import 'package:bfastui/bfastui.dart';
+import 'package:bfastui/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BFastUIModuleController extends BFastUIModule {
   final String path;
-  List<BFastUIService> _services;
-  List<BFastUIRouter> _routers;
+  final String moduleName;
 
   BFastUIModuleController({
+    this.moduleName = BFastUIConfig.DEFAULT_MODULE,
     this.path = '/',
-    List<BFastUIService> services,
-    List<BFastUIRouter> routers,
-  }) {
-    this._services = services;
-    this._routers = routers;
-  }
+  });
 
   @override
-  List<Bind> get binds => (this._services != null)
-      ? this
-          ._services
+  List<Bind> get binds => (BFastUI.services(moduleName: this.moduleName).getServices() != null)
+      ? BFastUI.services(moduleName: this.moduleName)
+          .getServices()
           .map<Bind>(
-              (e) => Bind((_)=>e, singleton: e.singleton, lazy: e.lazy))
+              (e) => Bind(e.inject, singleton: e.singleton, lazy: e.lazy))
           .toList()
       : [];
 
@@ -32,9 +27,8 @@ class BFastUIModuleController extends BFastUIModule {
   Widget get bootstrap => _AppWidget(this.path);
 
   @override
-  List<Router> get routers => (this._routers != null)
-      ? this
-          ._routers
+  List<Router> get routers => (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
+      ? BFastUI.navigation(moduleName: this.moduleName).getRoutes()
           .map<Router>((e) => Router(
                 this.path,
                 module: e.module,
