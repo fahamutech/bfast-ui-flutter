@@ -20,7 +20,7 @@ void main() {
         ? BFastUI.states().getAll()
         : [];
     print(binds);
-    HomePageState state = BFastUI.states().getStateByName<HomePageState>();
+    HomePageState state = BFastUI.states().get<HomePageState>();
     state.incrementAge();
     print(state.age);
   });
