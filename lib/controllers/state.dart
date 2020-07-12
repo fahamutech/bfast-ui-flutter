@@ -15,11 +15,10 @@ class BFastUIStateController {
 
   BFastUIStateController._();
 
-  static final Map<String, List<BFastUIStateBinder>> _states = {};
+  static final Map<String, List<Bind>> _states = {};
 
   BFastUIStateController addState<T extends BFastUIState>(
       BFastUIStateBinder<T> bind) {
-    print(T);
     assert(T != null, "State type required");
     if (_states.containsKey(_moduleName)) {
       _states[_moduleName].add(bind);
@@ -29,29 +28,28 @@ class BFastUIStateController {
     return this;
   }
 
-  List<BFastUIStateBinder> getAll() {
+  List<Bind> getAll() {
     return _states[_moduleName];
   }
 
-  T getStateByName<T extends BFastUIState>(String name) {
-    if (_states.containsKey(_moduleName)) {
-      int serviceIndex =
-          _states[_moduleName].indexWhere((element) => element.name == name);
-      if (serviceIndex != null && serviceIndex != -1) {
-        return _states[_moduleName][serviceIndex].inject(null) as T;
-      } else {
-        throw "service not found";
-      }
-    } else {
-      throw "services for that module not found";
-    }
+  T getStateByName<T extends BFastUIState>() {
+    return Modular.get<T>();
+//    if (_states.containsKey(_moduleName)) {
+//      int serviceIndex =
+//          _states[_moduleName].indexWhere((element) => element.name == name);
+//      if (serviceIndex != null && serviceIndex != -1) {
+//        return _states[_moduleName][serviceIndex].inject(null) as T;
+//      } else {
+//        throw "service not found";
+//      }
+//    } else {
+//      throw "services for that module not found";
+//    }
   }
 }
 
 class BFastUIStateBinder<T> extends Bind<T> {
-  String name;
-
-  BFastUIStateBinder(T Function(Inject i) inject, this.name,
+  BFastUIStateBinder(T Function(Inject i) inject,
       {bool singleton = true, bool lazy = true})
       : super(inject, singleton: singleton, lazy: lazy);
 }

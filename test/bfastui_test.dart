@@ -15,12 +15,12 @@ class HomePageState extends BFastUIState {
 void main() {
   test('adds one to input values', () {
     BFastUI.states().addState<HomePageState>(
-        BFastUIStateBinder((_) => HomePageState(), "home"));
+        BFastUIStateBinder((_) => HomePageState()));
     var binds = (BFastUI.states().getAll() != null)
         ? BFastUI.states().getAll()
         : [];
     print(binds);
-    var state = BFastUI.states().getStateByName<HomePageState>("home");
+    HomePageState state = BFastUI.states().getStateByName<HomePageState>();
     state.incrementAge();
     print(state.age);
   });
