@@ -11,12 +11,16 @@ import 'package:bfastui/controllers/state.dart';
 class BFastUI {
   static BFastUIModule module({
     String name = BFastUIConfig.DEFAULT_MODULE,
-    path = '/',
+    String initialPath = '/',
   }) {
     return BFastUIModuleController(
       moduleName: name,
-      path: path,
+      initialPath: initialPath,
     );
+  }
+
+  static BFastUIChildModule childModule(String name) {
+    return BFastUIChildModuleController(name);
   }
 
   static NavigationController navigation(
@@ -33,8 +37,7 @@ class BFastUI {
     return BFastUIStateController.getInstance();
   }
 
-  static BFastUIComponent component(
-      {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
+  static BFastUIComponent component() {
     return BFastUIComponentController();
   }
 }
