@@ -32,19 +32,10 @@ class BFastUIStateController {
     return _states[_moduleName];
   }
 
-  T getStateByName<T extends BFastUIState>() {
+  T get<T extends BFastUIState>() {
+//    assert(T != null && T is BFastUIState && T.runtimeType.toString() != 'BFastUIState',
+//        "please enter implementation of BFastUIState Class");
     return Modular.get<T>();
-//    if (_states.containsKey(_moduleName)) {
-//      int serviceIndex =
-//          _states[_moduleName].indexWhere((element) => element.name == name);
-//      if (serviceIndex != null && serviceIndex != -1) {
-//        return _states[_moduleName][serviceIndex].inject(null) as T;
-//      } else {
-//        throw "service not found";
-//      }
-//    } else {
-//      throw "services for that module not found";
-//    }
   }
 }
 
