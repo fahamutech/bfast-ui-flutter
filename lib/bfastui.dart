@@ -6,7 +6,7 @@ import 'package:bfastui/config.dart';
 import 'package:bfastui/controllers/component.dart';
 import 'package:bfastui/controllers/module.dart';
 import 'package:bfastui/controllers/navigation.dart';
-import 'package:bfastui/controllers/service.dart';
+import 'package:bfastui/controllers/state.dart';
 
 class BFastUI {
   static BFastUIModule module({
@@ -28,9 +28,9 @@ class BFastUI {
 //    return PageController(moduleName);
 //  }
 
-  static BFastUIServiceController services(
+  static BFastUIStateController state(
       {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
-    return BFastUIServiceController.getInstance();
+    return BFastUIStateController.getInstance();
   }
 
   static BFastUIComponent component(
