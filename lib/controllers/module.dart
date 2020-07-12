@@ -16,11 +16,11 @@ class BFastUIModuleController extends BFastUIModule {
 
   @override
   List<Bind> get binds =>
-      (BFastUI.services(moduleName: this.moduleName).getServices() != null)
-          ? BFastUI.services(moduleName: this.moduleName)
-              .getServices()
+      (BFastUI.state(moduleName: this.moduleName).getStates() != null)
+          ? BFastUI.state(moduleName: this.moduleName)
+              .getStates()
               .map<Bind>((e) =>
-                  Bind((_) => e.inject(), singleton: e.singleton, lazy: e.lazy))
+                  Bind((_) => e.injector(), singleton: e.singleton, lazy: e.lazy))
               .toList()
           : [];
 
