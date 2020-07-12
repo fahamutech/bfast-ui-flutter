@@ -15,32 +15,35 @@ class BFastUIModuleController extends BFastUIModule {
   });
 
   @override
-  List<Bind> get binds => (BFastUI.services(moduleName: this.moduleName).getServices() != null)
-      ? BFastUI.services(moduleName: this.moduleName)
-          .getServices()
-          .map<Bind>(
-              (e) => Bind(e.inject, singleton: e.singleton, lazy: e.lazy))
-          .toList()
-      : [];
+  List<Bind> get binds =>
+      (BFastUI.services(moduleName: this.moduleName).getServices() != null)
+          ? BFastUI.services(moduleName: this.moduleName)
+              .getServices()
+              .map<Bind>((e) =>
+                  Bind((_) => e.inject(), singleton: e.singleton, lazy: e.lazy))
+              .toList()
+          : [];
 
   @override
   Widget get bootstrap => _AppWidget(this.path);
 
   @override
-  List<Router> get routers => (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
-      ? BFastUI.navigation(moduleName: this.moduleName).getRoutes()
-          .map<Router>((e) => Router(
-                this.path,
-                module: e.module,
-                child: (context, args) => e.page(context, args).build(args),
-                params: e.params,
-                guards: e.guards,
-                modulePath: e.modulePath,
-                customTransition: e.customTransition,
-                transition: e.transition,
-              ))
-          .toList()
-      : [];
+  List<Router> get routers =>
+      (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
+          ? BFastUI.navigation(moduleName: this.moduleName)
+              .getRoutes()
+              .map<Router>((e) => Router(
+                    this.path,
+                    module: e.module,
+                    child: (context, args) => e.page(context, args).build(args),
+                    params: e.params,
+                    guards: e.guards,
+                    modulePath: e.modulePath,
+                    customTransition: e.customTransition,
+                    transition: e.transition,
+                  ))
+              .toList()
+          : [];
 
   @override
   StatefulWidget start({bool isCupertino = false}) {
