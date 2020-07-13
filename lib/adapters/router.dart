@@ -1,3 +1,4 @@
+import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -5,9 +6,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 class BFastUIRouter {
   final String routerName;
   final BFastUIPage Function(BuildContext context, ModularArguments args) page;
-  final ChildModule module;
+  final BFastUIChildModule module;
   Map<String, String> params;
-  final List<RouteGuard> guards;
+  final List<BFastUIRouterGuard> guards;
   final TransitionType transition;
   final CustomTransition customTransition;
   final String modulePath;
@@ -25,3 +26,5 @@ class BFastUIRouter {
     this.modulePath,
   });
 }
+
+abstract class BFastUIRouterGuard extends RouteGuard{}

@@ -30,8 +30,10 @@ class BFastUIModuleController extends BFastUIModule {
               .getRoutes()
               .map<Router>((e) => Router(
                     e.routerName,
-                    module: e.module,
-                    child: (context, args) => e.page(context, args).build(args),
+                    module: e.module != null ? e.module : null,
+                    child: e.page != null
+                        ? (context, args) => e.page(context, args).build(args)
+                        : null,
                     params: e.params,
                     guards: e.guards,
                     modulePath: e.modulePath,
@@ -81,8 +83,10 @@ class BFastUIChildModuleController extends BFastUIChildModule {
               .getRoutes()
               .map<Router>((e) => Router(
                     e.routerName,
-                    module: e.module,
-                    child: (context, args) => e.page(context, args).build(args),
+                    module: e.module != null ? e.module : null,
+                    child: e.page != null
+                        ? (context, args) => e.page(context, args).build(args)
+                        : null,
                     params: e.params,
                     guards: e.guards,
                     modulePath: e.modulePath,
