@@ -25,7 +25,7 @@ class BFastUI {
 
   static NavigationController navigation(
       {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
-    return NavigationController.getInstance();
+    return NavigationController.getInstance(moduleName);
   }
 
 //  static PageAdapter page([String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
@@ -34,7 +34,7 @@ class BFastUI {
 
   static BFastUIStateController states(
       {String moduleName = BFastUIConfig.DEFAULT_MODULE}) {
-    return BFastUIStateController.getInstance();
+    return BFastUIStateController.getInstance(moduleName);
   }
 
   static BFastUIComponent component() {
