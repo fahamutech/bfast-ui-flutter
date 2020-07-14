@@ -27,4 +27,6 @@ class BFastUIRouter {
   });
 }
 
-abstract class BFastUIRouterGuard extends RouteGuard{}
+abstract class BFastUIRouterGuard {
+  Future<bool> canActivate(String url);
+}

@@ -1,4 +1,5 @@
 import 'package:bfastui/adapters/module.dart';
+import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:bfastui/config.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,11 @@ class BFastUIModuleController extends BFastUIModule {
                     e.routerName,
                     module: e.module != null ? e.module : null,
                     child: e.page != null
-                        ? (context, args) => e.page(context, args).build(args)
+                        ? (context, args) =>
+                            _getPageGuardWrapper(e, context, args)
                         : null,
                     params: e.params,
-                    guards: e.guards,
+//                    guards: [],
                     modulePath: e.modulePath,
                     customTransition: e.customTransition,
                     transition: e.transition,
@@ -85,14 +87,38 @@ class BFastUIChildModuleController extends BFastUIChildModule {
                     e.routerName,
                     module: e.module != null ? e.module : null,
                     child: e.page != null
-                        ? (context, args) => e.page(context, args).build(args)
+                        ? (context, args) =>
+                            _getPageGuardWrapper(e, context, args)
                         : null,
                     params: e.params,
-                    guards: e.guards,
+//                    guards: [],
                     modulePath: e.modulePath,
                     customTransition: e.customTransition,
                     transition: e.transition,
                   ))
               .toList()
           : [];
+}
+
+FutureBuilder _getPageGuardWrapper(
+  BFastUIRouter router,
+  BuildContext context,
+  ModularArguments args,
+) {
+  List<Future<bool>> allGuards =
+      router.guards != null && router.guards.length != 0
+          ? router.guards.map((e) => e.canActivate(router.routerName)).toList()
+          : [Future<bool>.value(true)];
+  return FutureBuilder(
+    initialData: true,
+    future: Future.wait(allGuards),
+    builder: (_, snapshot) {
+      if (snapshot.hasData == true) {
+        return router.page(context, args).build(args);
+      } else {
+        Modular.to.pop();
+        return Container();
+      }
+    },
+  );
 }
