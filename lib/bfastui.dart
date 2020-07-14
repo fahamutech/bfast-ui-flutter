@@ -37,7 +37,7 @@ class BFastUI {
     return BFastUIStateController.getInstance(moduleName);
   }
 
-  static BFastUIComponent component() {
+  static BFastUIComponentController component() {
     return BFastUIComponentController();
   }
 }
