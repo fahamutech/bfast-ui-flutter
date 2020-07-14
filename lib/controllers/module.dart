@@ -2,6 +2,7 @@ import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:bfastui/config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -110,14 +111,24 @@ FutureBuilder _getPageGuardWrapper(
           ? router.guards.map((e) => e.canActivate(router.routerName)).toList()
           : [Future<bool>.value(true)];
   return FutureBuilder(
-    initialData: true,
-    future: Future.wait(allGuards),
+    future: Future.wait<bool>(allGuards),
     builder: (_, snapshot) {
-      if (snapshot.hasData == true) {
-        return router.page(context, args).build(args);
+      if (snapshot.connectionState == ConnectionState.done) {
+        bool data = snapshot.data?.reduce((value, element) => value && element);
+        if (snapshot.hasData == true && data == true) {
+          return router.page(context, args).build(args);
+        } else {
+          try {
+            Modular.to.maybePop();
+          } catch (e) {
+            // print(e.toString());
+          }
+          return Container(color: Colors.white);
+        }
       } else {
-        Modular.to.pop();
-        return Container();
+        return router.onGuardCheck != null
+            ? router.onGuardCheck
+            : Container(color: Colors.white);
       }
     },
   );
