@@ -7,34 +7,34 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BFastUIModuleController extends BFastUIModule {
-  final String initialPath;
-  final String moduleName;
-  final Route Function(RouteSettings settings) onUnknownRoute;
-  final String title;
-  final Color color;
-  final ThemeData theme;
-  final ThemeData darkTheme;
-  final ThemeMode themeMode;
-  final Locale locale;
-  final Iterable<LocalizationsDelegate> localizationsDelegates;
-  final Locale Function(List<Locale>, Iterable<Locale>)
+   String initialPath;
+   String moduleName;
+   Route Function(RouteSettings settings) onUnknownRoute;
+   String title;
+   Color color;
+   ThemeData theme;
+   ThemeData darkTheme;
+   ThemeMode themeMode;
+   Locale locale;
+   Iterable<LocalizationsDelegate> localizationsDelegates;
+   Locale Function(List<Locale>, Iterable<Locale>)
       localeListResolutionCallback;
-  final Locale Function(Locale, Iterable<Locale>) localeResolutionCallback;
-  final Iterable<Locale> supportedLocales;
-  final bool debugShowMaterialGrid;
-  final bool showPerformanceOverlay;
-  final bool checkerboardRasterCacheImages;
-  final bool checkerboardOffscreenLayers;
-  final bool showSemanticsDebugger;
-  final bool debugShowCheckedModeBanner;
-  final Map<LogicalKeySet, Intent> shortcuts;
-  final Map<Type, Action<Intent>> actions;
+   Locale Function(Locale, Iterable<Locale>) localeResolutionCallback;
+   Iterable<Locale> supportedLocales;
+   bool debugShowMaterialGrid;
+   bool showPerformanceOverlay;
+   bool checkerboardRasterCacheImages;
+   bool checkerboardOffscreenLayers;
+   bool showSemanticsDebugger;
+   bool debugShowCheckedModeBanner;
+   Map<LogicalKeySet, Intent> shortcuts;
+   Map<Type, Action<Intent>> actions;
 
   BFastUIModuleController({
     this.moduleName = BFastUIConfig.DEFAULT_MODULE,
     this.initialPath = '/',
     this.onUnknownRoute,
-    this.title = '',
+    this.title,
     this.color,
     this.theme,
     this.darkTheme,
