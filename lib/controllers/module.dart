@@ -71,7 +71,6 @@ class BFastUIMainModuleController {
           showSemanticsDebugger: showSemanticsDebugger,
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           shortcuts: shortcuts,
-          actions: actions,
         ),
         isCupertino: isCupertino);
   }
@@ -121,7 +120,6 @@ class _MainModule extends MainModule {
     this.showSemanticsDebugger = false,
     this.debugShowCheckedModeBanner = true,
     this.shortcuts,
-    this.actions,
   });
 
   @override
@@ -157,7 +155,6 @@ class _MainModule extends MainModule {
     return _MainModuleBootstrapApp(
       this.initialPath,
       debugShowCheckedModeBanner: this.debugShowCheckedModeBanner,
-      actions: this.actions,
       shortcuts: this.shortcuts,
       checkerboardRasterCacheImages: this.checkerboardRasterCacheImages,
       showSemanticsDebugger: this.showSemanticsDebugger,
@@ -200,7 +197,6 @@ class _MainModuleBootstrapApp extends StatelessWidget {
   final bool showSemanticsDebugger;
   final bool debugShowCheckedModeBanner;
   final Map<LogicalKeySet, Intent> shortcuts;
-  final Map<Type, Action<Intent>> actions;
 
   _MainModuleBootstrapApp(
     this._initialPath, {
@@ -222,14 +218,12 @@ class _MainModuleBootstrapApp extends StatelessWidget {
     this.showSemanticsDebugger = false,
     this.debugShowCheckedModeBanner = true,
     this.shortcuts,
-    this.actions,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: this.debugShowCheckedModeBanner,
-      actions: this.actions,
       shortcuts: this.shortcuts,
       showSemanticsDebugger: this.showSemanticsDebugger,
       checkerboardOffscreenLayers: this.checkerboardOffscreenLayers,
