@@ -7,9 +7,7 @@ class BFastUIComponentController {
       final Widget Function(BuildContext context, T state) consumerBuilder) {
     assert(T != null && T.runtimeType.toString() != "BFastUIState");
     return Consumer<T>(
-      builder: (_, state) =>
-          Builder(builder: (context) => consumerBuilder(context, state)),
-    );
+        builder: (context, state) => consumerBuilder(context, state));
   }
 
   Widget custom(Widget Function(BuildContext context) builder) {

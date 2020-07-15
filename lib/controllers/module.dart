@@ -6,31 +6,101 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BFastUIModuleController extends BFastUIModule {
-   String initialPath;
-   String moduleName;
-   Route Function(RouteSettings settings) onUnknownRoute;
-   String title;
-   Color color;
-   ThemeData theme;
-   ThemeData darkTheme;
-   ThemeMode themeMode;
-   Locale locale;
-   Iterable<LocalizationsDelegate> localizationsDelegates;
-   Locale Function(List<Locale>, Iterable<Locale>)
-      localeListResolutionCallback;
-   Locale Function(Locale, Iterable<Locale>) localeResolutionCallback;
-   Iterable<Locale> supportedLocales;
-   bool debugShowMaterialGrid;
-   bool showPerformanceOverlay;
-   bool checkerboardRasterCacheImages;
-   bool checkerboardOffscreenLayers;
-   bool showSemanticsDebugger;
-   bool debugShowCheckedModeBanner;
-   Map<LogicalKeySet, Intent> shortcuts;
-   Map<Type, Action<Intent>> actions;
+class BFastUIMainModuleController {
+  final BFastUIMainModule module;
 
-  BFastUIModuleController({
+  BFastUIMainModuleController({@required this.module});
+
+  // starting a main app
+  Widget start({
+    bool isCupertino = false,
+    String initialPath = '/',
+    Route Function(RouteSettings settings) onUnknownRoute,
+    String title = '',
+    Color color,
+    ThemeData theme,
+    ThemeData darkTheme,
+    ThemeMode themeMode = ThemeMode.system,
+    Locale locale,
+    Iterable<LocalizationsDelegate> localizationsDelegates,
+    Locale Function(List<Locale>, Iterable<Locale>)
+        localeListResolutionCallback,
+    Locale Function(Locale, Iterable<Locale>) localeResolutionCallback,
+    Iterable<Locale> supportedLocales = const <Locale>[Locale('en', 'US')],
+    bool debugShowMaterialGrid = false,
+    bool showPerformanceOverlay = false,
+    bool checkerboardRasterCacheImages = false,
+    bool checkerboardOffscreenLayers = false,
+    bool showSemanticsDebugger = false,
+    bool debugShowCheckedModeBanner = true,
+    Map<LogicalKeySet, Intent> shortcuts,
+    Map<Type, Action<Intent>> actions,
+  }) {
+    this.module.initStates(module.moduleName());
+    this.module.initRoutes(module.moduleName());
+
+//    // this must be in respective modules when initialized
+//    if (this.modules != null &&
+//        this.modules is List<BFastUIChildModule> &&
+//        this.modules.length > 0) {
+//      this.modules.forEach((module) {
+//        module.initStates(module.moduleName());
+//        module.initRoutes(module.moduleName());
+//      });
+//    }
+
+    return ModularApp(
+        module: _MainModule(
+          moduleName: module.moduleName(),
+          initialPath: initialPath,
+          onUnknownRoute: onUnknownRoute,
+          title: title,
+          color: color,
+          theme: theme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          locale: locale,
+          localizationsDelegates: localizationsDelegates,
+          localeListResolutionCallback: localeListResolutionCallback,
+          localeResolutionCallback: localeResolutionCallback,
+          supportedLocales: supportedLocales,
+          debugShowMaterialGrid: debugShowMaterialGrid,
+          showPerformanceOverlay: showPerformanceOverlay,
+          checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+          checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+          showSemanticsDebugger: showSemanticsDebugger,
+          debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+          shortcuts: shortcuts,
+          actions: actions,
+        ),
+        isCupertino: isCupertino);
+  }
+}
+
+class _MainModule extends MainModule {
+  String initialPath;
+  String moduleName;
+  Route Function(RouteSettings settings) onUnknownRoute;
+  String title;
+  Color color;
+  ThemeData theme;
+  ThemeData darkTheme;
+  ThemeMode themeMode;
+  Locale locale;
+  Iterable<LocalizationsDelegate> localizationsDelegates;
+  Locale Function(List<Locale>, Iterable<Locale>) localeListResolutionCallback;
+  Locale Function(Locale, Iterable<Locale>) localeResolutionCallback;
+  Iterable<Locale> supportedLocales;
+  bool debugShowMaterialGrid;
+  bool showPerformanceOverlay;
+  bool checkerboardRasterCacheImages;
+  bool checkerboardOffscreenLayers;
+  bool showSemanticsDebugger;
+  bool debugShowCheckedModeBanner;
+  Map<LogicalKeySet, Intent> shortcuts;
+  Map<Type, Action<Intent>> actions;
+
+  _MainModule({
     this.moduleName = BFastUIConfig.DEFAULT_MODULE,
     this.initialPath = '/',
     this.onUnknownRoute,
@@ -55,65 +125,61 @@ class BFastUIModuleController extends BFastUIModule {
   });
 
   @override
-  List<Bind> get binds =>
-      (BFastUI.states(moduleName: this.moduleName).getAll() != null)
-          ? BFastUI.states(moduleName: this.moduleName).getAll()
-          : [];
+  List<Bind> get binds {
+    return (BFastUI.states(moduleName: this.moduleName).getAll() != null)
+        ? BFastUI.states(moduleName: this.moduleName).getAll()
+        : [];
+  }
 
   @override
-  Widget get bootstrap => _AppWidget(
-        this.initialPath,
-        debugShowCheckedModeBanner: this.debugShowCheckedModeBanner,
-        actions: this.actions,
-        shortcuts: this.shortcuts,
-        checkerboardRasterCacheImages: this.checkerboardRasterCacheImages,
-        showSemanticsDebugger: this.showSemanticsDebugger,
-        checkerboardOffscreenLayers: this.checkerboardOffscreenLayers,
-        showPerformanceOverlay: this.showPerformanceOverlay,
-        debugShowMaterialGrid: this.debugShowMaterialGrid,
-        supportedLocales: this.supportedLocales,
-        localeResolutionCallback: this.localeResolutionCallback,
-        localeListResolutionCallback: this.localeListResolutionCallback,
-        localizationsDelegates: this.localizationsDelegates,
-        locale: this.locale,
-        themeMode: this.themeMode,
-        darkTheme: this.darkTheme,
-        theme: this.theme,
-        color: this.color,
-        title: this.title,
-        onUnknownRoute: this.onUnknownRoute,
-      );
-
-  @override
-  List<Router> get routers =>
-      (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
-          ? BFastUI.navigation(moduleName: this.moduleName)
-              .getRoutes()
-              .map<Router>((e) => Router(
-                    e.routerName,
-                    module: e.module != null ? e.module : null,
-                    child: e.page != null
-                        ? (context, args) =>
-                            _getPageGuardWrapper(e, context, args)
-                        : null,
-                    params: e.params,
+  List<Router> get routers {
+    return (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
+        ? BFastUI.navigation(moduleName: this.moduleName)
+            .getRoutes()
+            .map<Router>((e) => Router(
+                  e.routerName,
+                  module: e.module != null ? e.module.start() : null,
+                  child: e.page != null
+                      ? (context, args) => _pageGuardWrapper(e, context, args)
+                      : null,
+                  params: e.params,
 //                    guards: [],
-                    modulePath: e.modulePath,
-                    customTransition: e.customTransition,
-                    transition: e.transition,
-                  ))
-              .toList()
-          : [];
+                  modulePath: e.modulePath,
+                  customTransition: e.customTransition,
+                  transition: e.transition,
+                ))
+            .toList()
+        : [];
+  }
 
   @override
-  StatefulWidget start({
-    bool isCupertino = false,
-  }) {
-    return ModularApp(module: this, isCupertino: isCupertino);
+  Widget get bootstrap {
+    return _MainModuleBootstrapApp(
+      this.initialPath,
+      debugShowCheckedModeBanner: this.debugShowCheckedModeBanner,
+      actions: this.actions,
+      shortcuts: this.shortcuts,
+      checkerboardRasterCacheImages: this.checkerboardRasterCacheImages,
+      showSemanticsDebugger: this.showSemanticsDebugger,
+      checkerboardOffscreenLayers: this.checkerboardOffscreenLayers,
+      showPerformanceOverlay: this.showPerformanceOverlay,
+      debugShowMaterialGrid: this.debugShowMaterialGrid,
+      supportedLocales: this.supportedLocales,
+      localeResolutionCallback: this.localeResolutionCallback,
+      localeListResolutionCallback: this.localeListResolutionCallback,
+      localizationsDelegates: this.localizationsDelegates,
+      locale: this.locale,
+      themeMode: this.themeMode,
+      darkTheme: this.darkTheme,
+      theme: this.theme,
+      color: this.color,
+      title: this.title,
+      onUnknownRoute: this.onUnknownRoute,
+    );
   }
 }
 
-class _AppWidget extends StatelessWidget {
+class _MainModuleBootstrapApp extends StatelessWidget {
   final String _initialPath;
   final Route Function(RouteSettings settings) onUnknownRoute;
   final String title;
@@ -136,7 +202,7 @@ class _AppWidget extends StatelessWidget {
   final Map<LogicalKeySet, Intent> shortcuts;
   final Map<Type, Action<Intent>> actions;
 
-  _AppWidget(
+  _MainModuleBootstrapApp(
     this._initialPath, {
     this.onUnknownRoute,
     this.title = '',
@@ -188,40 +254,54 @@ class _AppWidget extends StatelessWidget {
   }
 }
 
-class BFastUIChildModuleController extends BFastUIChildModule {
-  final String moduleName;
+class _ChildModuleApp extends ChildModule {
+  String _moduleName;
 
-  BFastUIChildModuleController(this.moduleName);
-
-  @override
-  List<Bind> get binds =>
-      (BFastUI.states(moduleName: this.moduleName).getAll() != null)
-          ? BFastUI.states(moduleName: this.moduleName).getAll()
-          : [];
+  _ChildModuleApp(this._moduleName);
 
   @override
-  List<Router> get routers =>
-      (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
-          ? BFastUI.navigation(moduleName: this.moduleName)
-              .getRoutes()
-              .map<Router>((e) => Router(
-                    e.routerName,
-                    module: e.module != null ? e.module : null,
-                    child: e.page != null
-                        ? (context, args) =>
-                            _getPageGuardWrapper(e, context, args)
-                        : null,
-                    params: e.params,
+  List<Bind> get binds {
+    return (BFastUI.states(moduleName: this._moduleName).getAll() != null)
+        ? BFastUI.states(moduleName: this._moduleName).getAll()
+        : [];
+  }
+
+  @override
+  List<Router> get routers {
+    return (BFastUI.navigation(moduleName: this._moduleName).getRoutes() !=
+            null)
+        ? BFastUI.navigation(moduleName: this._moduleName)
+            .getRoutes()
+            .map<Router>((e) => Router(
+                  e.routerName,
+                  module: e.module != null ? e.module.start() : null,
+                  child: e.page != null
+                      ? (context, args) => _pageGuardWrapper(e, context, args)
+                      : null,
+                  params: e.params,
 //                    guards: [],
-                    modulePath: e.modulePath,
-                    customTransition: e.customTransition,
-                    transition: e.transition,
-                  ))
-              .toList()
-          : [];
+                  modulePath: e.modulePath,
+                  customTransition: e.customTransition,
+                  transition: e.transition,
+                ))
+            .toList()
+        : [];
+  }
 }
 
-FutureBuilder _getPageGuardWrapper(
+class BFastUIChildModuleController {
+  final BFastUIChildModule module;
+
+  BFastUIChildModuleController({@required this.module});
+
+  ChildModule start() {
+    module.initStates(module.moduleName());
+    module.initRoutes(module.moduleName());
+    return _ChildModuleApp(module.moduleName());
+  }
+}
+
+FutureBuilder _pageGuardWrapper(
   BFastUIRouter router,
   BuildContext context,
   ModularArguments args,
