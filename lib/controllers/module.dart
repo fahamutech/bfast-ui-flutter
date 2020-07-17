@@ -35,7 +35,6 @@ class BFastUIMainModuleController {
     bool showSemanticsDebugger = false,
     bool debugShowCheckedModeBanner = true,
     Map<LogicalKeySet, Intent> shortcuts,
-    Map<Type, Action<Intent>> actions,
   }) {
     this.module.initStates(module.moduleName());
     this.module.initRoutes(module.moduleName());
@@ -98,7 +97,6 @@ class _MainModule extends MainModule {
   bool showSemanticsDebugger;
   bool debugShowCheckedModeBanner;
   Map<LogicalKeySet, Intent> shortcuts;
-  Map<Type, Action<Intent>> actions;
 
   _MainModule({
     this.moduleName = BFastUIConfig.DEFAULT_MODULE,
