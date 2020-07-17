@@ -2,6 +2,7 @@ import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:bfastui/config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -322,7 +323,11 @@ FutureBuilder _pageGuardWrapper(
       } else {
         return router.onGuardCheck != null
             ? router.onGuardCheck
-            : Container(color: Colors.white);
+            : Container(
+                color: Colors.white,
+                child: CircularProgressIndicator(),
+                alignment: Alignment.center,
+              );
       }
     },
   );

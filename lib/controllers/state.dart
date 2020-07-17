@@ -33,8 +33,8 @@ class BFastUIStateController {
   }
 
   T get<T extends BFastUIState>() {
-//    assert(T != null && T is BFastUIState && T.runtimeType.toString() != 'BFastUIState',
-//        "please enter implementation of BFastUIState Class");
+    assert(T.toString() != 'BFastUIState',
+    "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
     return Modular.get<T>();
   }
 }
