@@ -137,10 +137,9 @@ class _MainModule extends MainModule {
                   e.routerName,
                   module: e.module != null ? e.module.start() : null,
                   child: e.page != null
-                      ? (context, args) => _pageGuardWrapper(e, context, args)
+                      ? (context, args) => pageGuardWrapper(e, context, args)
                       : null,
                   params: e.params,
-//                    guards: [],
                   modulePath: e.modulePath,
                   customTransition: e.customTransition,
                   transition: e.transition,
@@ -247,54 +246,19 @@ class _MainModuleBootstrapApp extends StatelessWidget {
   }
 }
 
-class _ChildModuleApp extends ChildModule {
-  String _moduleName;
-
-  _ChildModuleApp(this._moduleName);
-
-  @override
-  List<Bind> get binds {
-    return (BFastUI.states(moduleName: this._moduleName).getAll() != null)
-        ? BFastUI.states(moduleName: this._moduleName).getAll()
-        : [];
-  }
-
-  @override
-  List<Router> get routers {
-    return (BFastUI.navigation(moduleName: this._moduleName).getRoutes() !=
-            null)
-        ? BFastUI.navigation(moduleName: this._moduleName)
-            .getRoutes()
-            .map<Router>((e) => Router(
-                  e.routerName,
-                  module: e.module != null ? e.module.start() : null,
-                  child: e.page != null
-                      ? (context, args) => _pageGuardWrapper(e, context, args)
-                      : null,
-                  params: e.params,
-//                    guards: [],
-                  modulePath: e.modulePath,
-                  customTransition: e.customTransition,
-                  transition: e.transition,
-                ))
-            .toList()
-        : [];
-  }
-}
-
 class BFastUIChildModuleController {
-  final BFastUIChildModule module;
+  BFastUIChildModule module;
 
   BFastUIChildModuleController({@required this.module});
 
   ChildModule start() {
     module.initStates(module.moduleName());
     module.initRoutes(module.moduleName());
-    return _ChildModuleApp(module.moduleName());
+    return this.module;
   }
 }
 
-FutureBuilder _pageGuardWrapper(
+FutureBuilder pageGuardWrapper(
   BFastUIRouter router,
   BuildContext context,
   ModularArguments args,
@@ -313,9 +277,7 @@ FutureBuilder _pageGuardWrapper(
         } else {
           try {
             Modular.to.maybePop();
-          } catch (e) {
-            // print(e.toString());
-          }
+          } catch (e) {}
           return Container(color: Colors.white);
         }
       } else {
