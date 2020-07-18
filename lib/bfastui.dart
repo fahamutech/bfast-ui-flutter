@@ -24,11 +24,15 @@ class BFastUI {
   }
 
   static void navigateTo(String routeName) {
-    Modular.to.pushNamed(routeName);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushNamed(routeName);
+    });
   }
 
   static void navigateToAndReplace(String routeName) {
-    Modular.to.pushReplacementNamed(routeName);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushReplacementNamed(routeName);
+    });
   }
 
   static IModularNavigator navigator() {
@@ -39,9 +43,9 @@ class BFastUI {
     return BFastUIStateController.getInstance(moduleName);
   }
 
-  static T getState<T extends BFastUIState>(){
+  static T getState<T extends BFastUIState>() {
     assert(T.toString() != 'BFastUIState',
-    "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
+        "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
     return Modular.get<T>();
   }
 

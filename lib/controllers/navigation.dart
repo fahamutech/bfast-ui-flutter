@@ -1,4 +1,5 @@
 import 'package:bfastui/adapters/router.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../config.dart';
@@ -23,23 +24,29 @@ class NavigationController {
     } else {
       _routes[_moduleName] = [route];
     }
+    _routes[_moduleName].toSet().toList();
     return this;
   }
 
   NavigationController addRoutes(List<BFastUIRouter> routes) {
     _routes[_moduleName] = routes;
+    _routes[_moduleName].toSet().toList();
     return this;
   }
 
   List<BFastUIRouter> getRoutes() {
-    return _routes[_moduleName];
+    return _routes[_moduleName].toSet().toList();
   }
 
-  to(String route) {
-    Modular.to.pushNamed(route);
+  to(String routeName) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushNamed(routeName);
+    });
   }
 
-  toAndReplace(String route) {
-    Modular.to.pushReplacementNamed(route);
+  toAndReplace(String routeName) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushReplacementNamed(routeName);
+    });
   }
 }

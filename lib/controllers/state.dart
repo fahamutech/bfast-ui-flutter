@@ -25,16 +25,17 @@ class BFastUIStateController {
     } else {
       _states[_moduleName] = [bind];
     }
+    _states[_moduleName].toSet().toList();
     return this;
   }
 
   List<Bind> getAll() {
-    return _states[_moduleName];
+    return _states[_moduleName].toSet().toList();
   }
 
   T get<T extends BFastUIState>() {
     assert(T.toString() != 'BFastUIState',
-    "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
+        "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
     return Modular.get<T>();
   }
 }
