@@ -15,22 +15,25 @@ class BFastUIStateController {
 
   BFastUIStateController._();
 
-  static final Map<String, List<Bind>> _states = {};
+  static final Map<String, Map<String, Bind>> _states = {};
 
   BFastUIStateController addState<T extends BFastUIState>(
       BFastUIStateBinder<T> bind) {
-    assert(T != null, "State type required");
     if (_states.containsKey(_moduleName)) {
-      _states[_moduleName].add(bind);
+      _states[_moduleName]
+          .update(bind.stateName, (_) => bind, ifAbsent: () => bind);
     } else {
-      _states[_moduleName] = [bind];
+      Map<String, Bind> map = Map();
+      map.update(bind.stateName, (_) => bind, ifAbsent: () => bind);
+      _states[_moduleName] = map;
     }
-    _states[_moduleName].toSet().toList();
     return this;
   }
 
   List<Bind> getAll() {
-    return _states[_moduleName];
+    return _states[_moduleName] != null
+        ? _states[_moduleName].values.toList()
+        : [];
   }
 
   T get<T extends BFastUIState>() {
@@ -40,8 +43,13 @@ class BFastUIStateController {
   }
 }
 
-class BFastUIStateBinder<T> extends Bind<T> {
+class BFastUIStateBinder<T extends BFastUIState> extends Bind<T> {
   BFastUIStateBinder(T Function(Inject i) inject,
       {bool singleton = true, bool lazy = true})
-      : super(inject, singleton: singleton, lazy: lazy);
+      : super(inject, singleton: singleton, lazy: lazy) {
+    assert(T.toString() != 'BFastUIState',
+        "please return the implementation of BFastUIState in inject Function and not the otherwise");
+  }
+
+  String get stateName => T.toString();
 }

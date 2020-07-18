@@ -28,6 +28,8 @@ class BFastUIRouter {
     this.customTransition,
     this.modulePath,
   });
+
+  String get navigationName => module.module.toString();
 }
 
 abstract class BFastUIRouterGuard {
