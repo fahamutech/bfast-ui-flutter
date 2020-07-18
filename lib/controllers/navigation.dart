@@ -35,7 +35,7 @@ class NavigationController {
   }
 
   List<BFastUIRouter> getRoutes() {
-    return _routes[_moduleName].toSet().toList();
+    return _routes[_moduleName];
   }
 
   to(String routeName) {

@@ -30,7 +30,7 @@ class BFastUIStateController {
   }
 
   List<Bind> getAll() {
-    return _states[_moduleName].toSet().toList();
+    return _states[_moduleName];
   }
 
   T get<T extends BFastUIState>() {
