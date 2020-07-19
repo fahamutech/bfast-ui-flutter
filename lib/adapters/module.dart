@@ -23,6 +23,7 @@ abstract class BFastUIChildModule extends ChildModule
     implements _BFastUIModule {
   @override
   List<Bind> get binds {
+    this.initStates(this.moduleName());
     return (BFastUI.states(moduleName: this.moduleName()).getAll() != null)
         ? BFastUI.states(moduleName: this.moduleName()).getAll()
         : [];
@@ -30,6 +31,7 @@ abstract class BFastUIChildModule extends ChildModule
 
   @override
   List<Router> get routers {
+    this.initRoutes(this.moduleName());
     return (BFastUI.navigation(moduleName: this.moduleName()).getRoutes() !=
             null)
         ? BFastUI.navigation(moduleName: this.moduleName())
