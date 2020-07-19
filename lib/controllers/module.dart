@@ -252,8 +252,6 @@ class BFastUIChildModuleController {
   BFastUIChildModuleController({@required this.module});
 
   ChildModule start() {
-//    module.initStates(module.moduleName());
-//    module.initRoutes(module.moduleName());
     return this.module;
   }
 }
