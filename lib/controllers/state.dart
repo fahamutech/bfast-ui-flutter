@@ -15,32 +15,53 @@ class BFastUIStateController {
 
   BFastUIStateController._();
 
-  static final Map<String, List<Bind>> _states = {};
+  static final Map<String, Map<String, Bind>> _states = {};
 
   BFastUIStateController addState<T extends BFastUIState>(
-      BFastUIStateBinder<T> bind) {
-    assert(T != null, "State type required");
+    T Function(Inject i) inject, {
+    bool singleton = true,
+    bool lazy = true,
+  }) {
+    assert(T.toString() != 'BFastUIState',
+        "please tell us the implementation of BFastUIState. For example addState<your implementation here>(...)");
     if (_states.containsKey(_moduleName)) {
-      _states[_moduleName].add(bind);
+      _states[_moduleName].update(T.toString(),
+          (_) => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton),
+          ifAbsent: () => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton));
     } else {
-      _states[_moduleName] = [bind];
+      Map<String, Bind> map = Map();
+      map.update(T.toString(),
+          (_) => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton),
+          ifAbsent: () => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton));
+      _states[_moduleName] = map;
     }
     return this;
   }
 
   List<Bind> getAll() {
-    return _states[_moduleName];
+    return _states[_moduleName] != null
+        ? _states[_moduleName].values.toList()
+        : [];
   }
 
   T get<T extends BFastUIState>() {
-//    assert(T != null && T is BFastUIState && T.runtimeType.toString() != 'BFastUIState',
-//        "please enter implementation of BFastUIState Class");
+    assert(T.toString() != 'BFastUIState',
+        "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
     return Modular.get<T>();
   }
 }
 
-class BFastUIStateBinder<T> extends Bind<T> {
-  BFastUIStateBinder(T Function(Inject i) inject,
-      {bool singleton = true, bool lazy = true})
-      : super(inject, singleton: singleton, lazy: lazy);
+class BFastUIStateBinder<T extends BFastUIState> {
+  T Function(Inject i) inject;
+  bool singleton;
+  bool lazy;
+
+  BFastUIStateBinder(this.inject, {this.singleton = true, this.lazy = true})
+  // : super(inject, singleton: singleton, lazy: lazy)
+  {
+    assert(T.toString() != 'BFastUIState',
+        "please return the implementation of BFastUIState in inject Function and not the otherwise");
+  }
+
+  String get stateName => T.toString();
 }

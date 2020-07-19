@@ -1,4 +1,5 @@
 import 'package:bfastui/adapters/router.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../config.dart';
@@ -15,31 +16,41 @@ class NavigationController {
 
   NavigationController._();
 
-  static final Map<String, List<BFastUIRouter>> _routes = {};
+  static final Map<String, Map<String, BFastUIRouter>> _routes = {};
 
   NavigationController addRoute(BFastUIRouter route) {
     if (_routes.containsKey(_moduleName)) {
-      _routes[_moduleName].add(route);
+      _routes[_moduleName]
+          .update(route.routerName, (_) => route, ifAbsent: () => route);
     } else {
-      _routes[_moduleName] = [route];
+      Map<String, BFastUIRouter> map = Map();
+      map.update(route.routerName, (_) => route, ifAbsent: () => route);
+      _routes[_moduleName] = map;
     }
     return this;
   }
 
-  NavigationController addRoutes(List<BFastUIRouter> routes) {
-    _routes[_moduleName] = routes;
-    return this;
-  }
+//
+//  NavigationController addRoutes(List<BFastUIRouter> routes) {
+//    _routes[_moduleName] = routes;
+//    return this;
+//  }
 
   List<BFastUIRouter> getRoutes() {
-    return _routes[_moduleName];
+    return _routes[_moduleName] != null
+        ? _routes[_moduleName].values.toList()
+        : [];
   }
 
-  to(String route) {
-    Modular.to.pushNamed(route);
+  to(String routeName) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushNamed(routeName);
+    });
   }
 
-  toAndReplace(String route) {
-    Modular.to.pushReplacementNamed(route);
+  toAndReplace(String routeName) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.to.pushReplacementNamed(routeName);
+    });
   }
 }
