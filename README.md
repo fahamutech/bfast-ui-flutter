@@ -156,7 +156,7 @@ dependencies:
       url: https://github.com/fahamutech/bfast-ui-flutter.git
 ```
 
-## Use only MainModule
+## Use only MainModule Example
 
 ```dart
 import 'package:bfastui/adapters/module.dart';
