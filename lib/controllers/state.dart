@@ -26,13 +26,15 @@ class BFastUIStateController {
         "please tell us the implementation of BFastUIState. For example addState<your implementation here>(...)");
     if (_states.containsKey(_moduleName)) {
       _states[_moduleName].update(T.toString(),
-          (_) => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton),
-          ifAbsent: () => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton));
+          (_) => Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton),
+          ifAbsent: () =>
+              Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton));
     } else {
       Map<String, Bind> map = Map();
       map.update(T.toString(),
-          (_) => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton),
-          ifAbsent: () => Bind<T>((_)=>inject(_), lazy: lazy, singleton: singleton));
+          (_) => Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton),
+          ifAbsent: () =>
+              Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton));
       _states[_moduleName] = map;
     }
     return this;
