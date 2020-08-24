@@ -30,12 +30,6 @@ class NavigationController {
     return this;
   }
 
-//
-//  NavigationController addRoutes(List<BFastUIRouter> routes) {
-//    _routes[_moduleName] = routes;
-//    return this;
-//  }
-
   List<BFastUIRouter> getRoutes() {
     return _routes[_moduleName] != null
         ? _routes[_moduleName].values.toList()

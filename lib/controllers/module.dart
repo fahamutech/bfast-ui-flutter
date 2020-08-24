@@ -2,7 +2,6 @@ import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:bfastui/config.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -129,11 +128,11 @@ class _MainModule extends MainModule {
   }
 
   @override
-  List<Router> get routers {
+  List<ModularRouter> get routers {
     return (BFastUI.navigation(moduleName: this.moduleName).getRoutes() != null)
         ? BFastUI.navigation(moduleName: this.moduleName)
             .getRoutes()
-            .map<Router>((e) => Router(
+            .map<ModularRouter>((e) => ModularRouter(
                   e.routerName,
                   module: e.module != null ? e.module.start() : null,
                   child: e.page != null

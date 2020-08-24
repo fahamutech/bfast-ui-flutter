@@ -30,13 +30,13 @@ abstract class BFastUIChildModule extends ChildModule
   }
 
   @override
-  List<Router> get routers {
+  List<ModularRouter> get routers {
     this.initRoutes(this.moduleName());
     return (BFastUI.navigation(moduleName: this.moduleName()).getRoutes() !=
             null)
         ? BFastUI.navigation(moduleName: this.moduleName())
             .getRoutes()
-            .map<Router>((e) => Router(
+            .map<ModularRouter>((e) => ModularRouter(
                   e.routerName,
                   module: e.module != null ? e.module.start() : null,
                   child: e.page != null
