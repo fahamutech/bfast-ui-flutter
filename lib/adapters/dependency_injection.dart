@@ -16,7 +16,7 @@ abstract class BFastDependencyInjectionController {
     preferRelativeImports: true, // default
     asExtension: false, // default
   )
-  void configureDependencies() => $initGetIt(getIt);
+  void configureDependencies();
 
-  
+
 }

@@ -135,6 +135,60 @@ class MyRouteAuthGuard extends BFastUIRouterGuard{
 
 when `canActivate` resolve to `true` the page or a module someone navigate to will be activated otherwise will return to previous route if available
 
+### Dependency Injection
+
+To use Bfast dependency the following libraries should be added to your pubspec.yaml file
+
+```
+  dependencies:
+    # add injectable to your dependencies
+    injectable:
+    # add get_it
+    get_It:
+
+  dev_dependencies:
+    # add the generator to your dev_dependencies
+    injectable_generator:
+    # of course build_runner is needed to run the generator
+    build_runner:
+```
+
+Go to the main.dart file and add the code below
+
+```
+  final getIt = GetIt.instance;
+  @InjectableInit(
+      initializerName: r'$initGetIt', // default
+      preferRelativeImports: true, // default
+      asExtension: false, // default
+    )
+    void configureDependencies() => $initGetIt(getIt);
+```
+
+Then run the following command to configure dependency injection
+
+```
+  flutter packages pub run build_runner watch
+```
+A new file main.config.dart will be created that contains all configuration for dependency injection.
+
+To use dependency injection with your services annotate them like below:
+
+```
+@bfastInjectable
+class HttpService{
+  String serverUrl = "https://pivotech-daas.bfast.fahamutech.com/v2";
+}
+```
+
+Then you can inject them in the class of choice like:
+
+```
+class IssueState extends BFastUIState {
+  HttpService httpService = getIt();
+}
+```
+
 
 # BFastUI - How To Use It
 
