@@ -1,5 +1,9 @@
 #
 
+## [1.1.0+1]
+
+Fix bug in guards for router adpter
+
 ## [1.1.0]
 
 Upgrade to `flutter_modular: 3.x

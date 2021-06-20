@@ -41,8 +41,6 @@ You will required to implement `initRoutes` and `initStates` method
 
 ```dart
 
-import 'package:bfastui/adapters/module.dart';
-
 class MyApp extends MainModuleAdapter{
   @override
   void initRoutes(String moduleName) {
@@ -70,7 +68,6 @@ This is the feature module to enclose your specific business logic. Your will re
 
 
 ```dart
-import 'package:bfastui/adapters/module.dart';
 
 class MyApp extends ChildModuleAdapter{
   @override
@@ -106,8 +103,6 @@ Page is what your see presented by your mobile phone. i.e  login page. Page belo
 
 
 ```dart
-import 'package:bfastui/adapters/page.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class MyPage extends PageAdapter{
   @override
@@ -145,8 +140,6 @@ to allow someone access or not. You can navigate to another Page or Module.
 To create a route guard
 
 ```dart
-import 'package:bfastui/adapters/router.dart';
-import 'package:bfastui/adapters/state.dart';
 
 class MyRouteAuthGuard extends RouterGuardAdapter{
   @override
@@ -164,14 +157,6 @@ will be activated otherwise will return to previous route if available
 ## Example
 
 ```dart
-import 'package:bfastui/adapters/module.dart';
-import 'package:bfastui/adapters/page.dart';
-import 'package:bfastui/adapters/router.dart';
-import 'package:bfastui/adapters/state.dart';
-import 'package:bfastui/bfastui.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 
 class MyHomePage extends PageAdapter{
   @override
