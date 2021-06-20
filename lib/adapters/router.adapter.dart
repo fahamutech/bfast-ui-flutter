@@ -1,5 +1,5 @@
-import 'package:bfastui/adapters/child-module.adapter.dart';
 import 'package:bfastui/adapters/page.adapter.dart';
+import 'package:bfastui/adapters/router-guard.adapter.dart';
 import 'package:bfastui/controllers/child-module.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,7 +9,7 @@ class RouterAdapter {
   final String routerName;
   final PageAdapter Function(BuildContext context, ModularArguments args) page;
   final ChildModuleController module;
-  final List<BFastUIRouterGuard> guards;
+  final List<RouterGuardAdapter> guards;
   final TransitionType transition;
   final CustomTransition customTransition;
   final Widget onGuardCheck;
@@ -25,8 +25,4 @@ class RouterAdapter {
   });
 
   String get navigationName => module.module.toString();
-}
-
-abstract class BFastUIRouterGuard {
-  Future<bool> canActivate(String url);
 }
