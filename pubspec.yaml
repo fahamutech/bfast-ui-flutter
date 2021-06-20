@@ -1,6 +1,6 @@
 name: bfastui
 description: easy and fast ways to  manage a flutter app
-version: 1.0.0
+version: 1.1.0
 homepage: https://github.com/fahamutech/bfast-ui-flutter
 
 environment:
@@ -9,7 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_modular: ^2.0.1
+  flutter_modular: 3.2.2+1
+  builders: 2.0.0
 
 dev_dependencies:
   flutter_test:

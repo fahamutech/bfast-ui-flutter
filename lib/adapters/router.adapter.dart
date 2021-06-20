@@ -1,32 +1,27 @@
-import 'package:bfastui/adapters/page.dart';
-import 'package:bfastui/controllers/module.dart';
+import 'package:bfastui/adapters/child-module.adapter.dart';
+import 'package:bfastui/adapters/page.adapter.dart';
+import 'package:bfastui/controllers/child-module.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BFastUIRouter {
+class RouterAdapter {
   final String routerName;
-  final BFastUIPage Function(BuildContext context, ModularArguments args) page;
-  final BFastUIChildModuleController module;
-  Map<String, String> params;
+  final PageAdapter Function(BuildContext context, ModularArguments args) page;
+  final ChildModuleController module;
   final List<BFastUIRouterGuard> guards;
   final TransitionType transition;
   final CustomTransition customTransition;
   final Widget onGuardCheck;
-  final String modulePath;
-  final Future<bool> Function(BuildContext context) before;
 
-  BFastUIRouter(
+  RouterAdapter(
     this.routerName, {
     this.module,
     this.page,
-    this.before,
     this.guards,
     this.onGuardCheck,
-    this.params,
     this.transition = TransitionType.defaultTransition,
     this.customTransition,
-    this.modulePath,
   });
 
   String get navigationName => module.module.toString();

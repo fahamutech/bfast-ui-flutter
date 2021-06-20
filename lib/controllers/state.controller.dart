@@ -1,40 +1,42 @@
-import 'package:bfastui/adapters/state.dart';
+import 'package:bfastui/adapters/state.adapter.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../config.dart';
 
-class BFastUIStateController {
-  static final BFastUIStateController _instance = BFastUIStateController._();
+class StateController {
+  static final StateController _instance = StateController._();
   static String _moduleName = BFastUIConfig.DEFAULT_MODULE;
 
-  factory BFastUIStateController.getInstance(
+  factory StateController.getInstance(
       [String moduleName = BFastUIConfig.DEFAULT_MODULE]) {
     _moduleName = moduleName;
     return _instance;
   }
 
-  BFastUIStateController._();
+  StateController._();
 
   static final Map<String, Map<String, Bind>> _states = {};
 
-  BFastUIStateController addState<T extends BFastUIState>(
-    T Function(Inject i) inject, {
+  StateController addState<T extends StateAdapter>(
+    T Function(Inject i) state, {
     bool singleton = true,
     bool lazy = true,
   }) {
     assert(T.toString() != 'BFastUIState',
         "please tell us the implementation of BFastUIState. For example addState<your implementation here>(...)");
     if (_states.containsKey(_moduleName)) {
-      _states[_moduleName].update(T.toString(),
-          (_) => Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton),
-          ifAbsent: () =>
-              Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton));
+      _states[_moduleName].update(
+        T.toString(),
+        (_) => Bind.lazySingleton((_) => state(_)),
+        ifAbsent: () => Bind.lazySingleton((_) => state(_)),
+      );
     } else {
       Map<String, Bind> map = Map();
-      map.update(T.toString(),
-          (_) => Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton),
-          ifAbsent: () =>
-              Bind<T>((_) => inject(_), lazy: lazy, singleton: singleton));
+      map.update(
+        T.toString(),
+        (_) => Bind.lazySingleton((_) => state(_)),
+        ifAbsent: () => Bind.lazySingleton((_) => state(_)),
+      );
       _states[_moduleName] = map;
     }
     return this;
@@ -46,14 +48,14 @@ class BFastUIStateController {
         : [];
   }
 
-  T get<T extends BFastUIState>() {
+  T get<T extends StateAdapter>() {
     assert(T.toString() != 'BFastUIState',
         "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
     return Modular.get<T>();
   }
 }
 
-class BFastUIStateBinder<T extends BFastUIState> {
+class BFastUIStateBinder<T extends StateAdapter> {
   T Function(Inject i) inject;
   bool singleton;
   bool lazy;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-abstract class BFastUIPage {
+abstract class PageAdapter {
   Widget build(var args);
 }
-

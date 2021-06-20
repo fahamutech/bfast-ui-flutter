@@ -1,4 +1,4 @@
-import 'package:bfastui/adapters/router.dart';
+import 'package:bfastui/adapters/router.adapter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -16,21 +16,21 @@ class NavigationController {
 
   NavigationController._();
 
-  static final Map<String, Map<String, BFastUIRouter>> _routes = {};
+  static final Map<String, Map<String, RouterAdapter>> _routes = {};
 
-  NavigationController addRoute(BFastUIRouter route) {
+  NavigationController addRoute(RouterAdapter route) {
     if (_routes.containsKey(_moduleName)) {
       _routes[_moduleName]
           .update(route.routerName, (_) => route, ifAbsent: () => route);
     } else {
-      Map<String, BFastUIRouter> map = Map();
+      Map<String, RouterAdapter> map = Map();
       map.update(route.routerName, (_) => route, ifAbsent: () => route);
       _routes[_moduleName] = map;
     }
     return this;
   }
 
-  List<BFastUIRouter> getRoutes() {
+  List<RouterAdapter> getRoutes() {
     return _routes[_moduleName] != null
         ? _routes[_moduleName].values.toList()
         : [];

@@ -1,12 +1,12 @@
-import 'package:bfastui/adapters/state.dart';
+import 'package:bfastui/adapters/state.adapter.dart';
+import 'package:builders/builders.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-class BFastUIComponentController {
-  Consumer<T> consumer<T extends BFastUIState>(
+class ComponentController {
+  Consumer<T> consumer<T extends StateAdapter>(
       final Widget Function(BuildContext context, T state) consumerBuilder) {
     assert(T.toString() != 'BFastUIState',
-    "please tell us the implementation of BFastUIState. For example consumer<your implementation here>()");
+        "please tell us the implementation of BFastUIState. For example consumer<your implementation here>()");
     return Consumer<T>(
         builder: (context, state) => consumerBuilder(context, state));
   }

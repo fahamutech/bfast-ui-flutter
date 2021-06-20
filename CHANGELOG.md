@@ -1,3 +1,8 @@
+#
+
+## [1.1.0]
+
+Upgrade to `flutter_modular: 3.x
 
 ## [1.0.0] 
 

@@ -1,22 +1,24 @@
 library bfastui;
 
-import 'package:bfastui/adapters/module.dart';
-import 'package:bfastui/adapters/state.dart';
-import 'package:bfastui/controllers/component.dart';
-import 'package:bfastui/controllers/module.dart';
-import 'package:bfastui/controllers/navigation.dart';
-import 'package:bfastui/controllers/state.dart';
+import 'package:bfastui/adapters/child-module.adapter.dart';
+import 'package:bfastui/adapters/main-module.adapter.dart';
+import 'package:bfastui/adapters/state.adapter.dart';
+import 'package:bfastui/controllers/child-module.controller.dart';
+import 'package:bfastui/controllers/component.controller.dart';
+import 'package:bfastui/controllers/main-module.controller.dart';
+import 'package:bfastui/controllers/navigation.controller.dart';
+import 'package:bfastui/controllers/state.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BFastUI {
-  static BFastUIMainModuleController module(BFastUIMainModule module) {
-    return BFastUIMainModuleController(module: module);
+  static MainModuleController init({@required MainModuleAdapter module, @required MaterialApp component}) {
+    return MainModuleController(module: module, component: ()=>component);
   }
 
-  static BFastUIChildModuleController childModule(BFastUIChildModule module) {
-    return BFastUIChildModuleController(module: module);
+  static ChildModuleController childModule(ChildModuleAdapter module) {
+    return ChildModuleController(module: module);
   }
 
   static NavigationController navigation({@required String moduleName}) {
@@ -39,17 +41,17 @@ class BFastUI {
     return Modular.to;
   }
 
-  static BFastUIStateController states({@required String moduleName}) {
-    return BFastUIStateController.getInstance(moduleName);
+  static StateController states({@required String moduleName}) {
+    return StateController.getInstance(moduleName);
   }
 
-  static T getState<T extends BFastUIState>() {
+  static T getState<T extends StateAdapter>() {
     assert(T.toString() != 'BFastUIState',
-        "please tell us the implementation of BFastUIState. For example get<your implementation here>()");
+        "please tell us the implementation of BFastUIState. For example getState<your implementation here>()");
     return Modular.get<T>();
   }
 
-  static BFastUIComponentController component() {
-    return BFastUIComponentController();
+  static ComponentController component() {
+    return ComponentController();
   }
 }
