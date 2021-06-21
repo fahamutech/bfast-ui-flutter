@@ -1,4 +1,11 @@
 #
+## [1.1.1]
+
+general available
+
+## [1.1.1-beta.4]
+
+Fix bugs and move main module adapter to stand alone
 
 ## [1.1.1-beta.3]
 
