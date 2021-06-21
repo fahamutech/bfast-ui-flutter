@@ -1,5 +1,9 @@
 #
 
+## [1.1.1-beta.3]
+
+Fix bugs in start method of main module controller
+
 ## [1.1.1-beta.2]
 
 Fix bugs in states initialization
