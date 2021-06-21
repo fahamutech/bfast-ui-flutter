@@ -1,5 +1,8 @@
 #
 
+## [1.1.1-beta.2]
+
+Fix bugs in states initialization
 
 ## [1.1.1-beta.1]
 

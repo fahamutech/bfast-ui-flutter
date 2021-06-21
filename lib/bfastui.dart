@@ -8,12 +8,14 @@ import 'package:bfastui/controllers/component.controller.dart';
 import 'package:bfastui/controllers/main-module.controller.dart';
 import 'package:bfastui/controllers/navigation.controller.dart';
 import 'package:bfastui/controllers/state.controller.dart';
+import 'package:builders/builders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BFastUI {
   static MainModuleController init({@required MainModuleAdapter module, @required MaterialApp component}) {
+    Builders.systemInjector(Modular.get);
     return MainModuleController(module: module, component: ()=>component);
   }
 
