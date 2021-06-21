@@ -1,5 +1,9 @@
 #
 
+## [1.1.1-beta.0]
+
+Fix bugs
+
 ## [1.1.0+1]
 
 Fix bug in guards for router adpter
