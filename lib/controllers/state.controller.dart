@@ -54,18 +54,3 @@ class StateController {
     return Modular.get<T>();
   }
 }
-
-class BFastUIStateBinder<T extends StateAdapter> {
-  T Function(Inject i) inject;
-  bool singleton;
-  bool lazy;
-
-  BFastUIStateBinder(this.inject, {this.singleton = true, this.lazy = true})
-  // : super(inject, singleton: singleton, lazy: lazy)
-  {
-    assert(T.toString() != 'BFastUIState',
-        "please return the implementation of BFastUIState in inject Function and not the otherwise");
-  }
-
-  String get stateName => T.toString();
-}
