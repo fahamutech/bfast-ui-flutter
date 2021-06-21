@@ -1,6 +1,6 @@
 name: bfastui
 description: easy and fast ways to  manage a flutter app
-version: 1.1.1
+version: 1.1.1-beta.0
 homepage: https://github.com/fahamutech/bfast-ui-flutter
 
 environment:
