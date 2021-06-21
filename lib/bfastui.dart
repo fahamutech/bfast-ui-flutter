@@ -14,9 +14,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BFastUI {
-  static MainModuleController init({@required MainModuleAdapter module, @required MaterialApp component}) {
+  static MainModuleController init(
+      {@required MainModuleAdapter module, @required MaterialApp component}) {
     Builders.systemInjector(Modular.get);
-    return MainModuleController(module: module, component: ()=>component);
+    return MainModuleController(module: module, component: () => component);
   }
 
   static ChildModuleController childModule(ChildModuleAdapter module) {

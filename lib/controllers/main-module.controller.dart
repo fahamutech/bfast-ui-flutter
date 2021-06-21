@@ -26,7 +26,6 @@ class MainModuleController {
   Widget start() {
     this.module.initStates(module.moduleName());
     this.module.initRoutes(module.moduleName());
-
     return ModularApp(
       module: this.module,
       child: _AppWidget(this.component()),
