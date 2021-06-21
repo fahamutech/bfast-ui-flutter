@@ -1,7 +1,7 @@
 #
 
 
-## [1.1.1-beta.0]
+## [1.1.1-beta.1]
 
 Fix bugs in main module adapter
 
