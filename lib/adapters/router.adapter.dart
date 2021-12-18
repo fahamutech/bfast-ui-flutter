@@ -7,7 +7,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class RouterAdapter {
   final String routerName;
-  final PageAdapter Function(BuildContext context, ModularArguments args) page;
+  final PageAdapter Function(BuildContext context, dynamic args) page;
   final ChildModuleController module;
   final List<RouterGuardAdapter> guards;
   final TransitionType transition;

@@ -1,4 +1,10 @@
 #
+## [1.2.0]
+
+Update `flutter_modular` package to 4.3.0
+
+general available
+
 ## [1.1.1]
 
 general available

@@ -18,7 +18,7 @@ class StateController {
   static final Map<String, Map<String, Bind>> _states = {};
 
   StateController addState<T extends StateAdapter>(
-    T Function(Inject i) state, {
+    T Function(BindInject i) state, {
     bool singleton = true,
     bool lazy = true,
   }) {
@@ -27,15 +27,15 @@ class StateController {
     if (_states.containsKey(_moduleName)) {
       _states[_moduleName].update(
         T.toString(),
-        (_) => Bind.lazySingleton((_) => state(_)),
-        ifAbsent: () => Bind.lazySingleton((_) => state(_)),
+        (_) => Bind.lazySingleton((_) => state(_())),
+        ifAbsent: () => Bind.lazySingleton((_) => state(_())),
       );
     } else {
       Map<String, Bind> map = Map();
       map.update(
         T.toString(),
-        (_) => Bind.lazySingleton((_) => state(_)),
-        ifAbsent: () => Bind.lazySingleton((_) => state(_)),
+        (_) => Bind.lazySingleton((_) => state(_())),
+        ifAbsent: () => Bind.lazySingleton((_) => state(_())),
       );
       _states[_moduleName] = map;
     }
