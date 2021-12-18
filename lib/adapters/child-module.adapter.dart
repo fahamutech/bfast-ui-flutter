@@ -16,28 +16,28 @@ abstract class ChildModuleAdapter extends Module implements ModuleAdapter {
   List<ModularRoute> get routes {
     this.initRoutes(this.moduleName());
     return (BFastUI.navigation(moduleName: this.moduleName()).getRoutes() !=
-        null)
+            null)
         ? BFastUI.navigation(moduleName: this.moduleName())
-        .getRoutes()
-        .map<ModularRoute>(
-          (route) => route.module != null
-          ? ModuleRoute(
-        route.routerName,
-        module: route.module.start(),
-        customTransition: route.customTransition,
-        transition: route.transition,
-      )
-          : ChildRoute(
-        route.routerName,
-        child: route.page != null
-            ? (context, args) =>
-            pageGuardWrapper(route, context, args)
-            : null,
-        customTransition: route.customTransition,
-        transition: route.transition,
-      ),
-    )
-        .toList()
+            .getRoutes()
+            .map<ModularRoute>(
+              (route) => route.module != null
+                  ? ModuleRoute(
+                      route.routerName,
+                      module: route.module.start(),
+                      customTransition: route.customTransition,
+                      transition: route.transition,
+                    )
+                  : ChildRoute(
+                      route.routerName,
+                      child: route.page != null
+                          ? (context, args) =>
+                              pageGuardWrapper(route, context, args)
+                          : null,
+                      customTransition: route.customTransition,
+                      transition: route.transition,
+                    ),
+            )
+            .toList()
         : [];
   }
 }

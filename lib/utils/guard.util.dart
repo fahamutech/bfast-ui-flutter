@@ -6,7 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 FutureBuilder pageGuardWrapper(
   RouterAdapter router,
   BuildContext context,
-  ModularArguments args,
+  var args,
 ) {
   List<Future<bool>> allGuards =
       router.guards != null && router.guards.length != 0
