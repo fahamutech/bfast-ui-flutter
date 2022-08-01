@@ -1,9 +1,10 @@
 # BFastUI - Introduction
 
-State and architecture management library for flutter 
+State and UI architecture library for flutter inspired
+by [flutter_modular](https://modular.flutterando.com.br/docs/flutter_modular/start)
+for architecture and ChangeNotifier pattern for states.
 
 ![BFast UI](bfastui.png)
-
 
 ## Installation
 
@@ -26,39 +27,34 @@ dependencies:
 ## Module
 
 You organised your domain in your application in modules. Module is a top level abstraction of your
-application. 
-    
+application.
+
 ### MainModule
 
-This is the bootstrap module for your application.
-Is only defined once your application.
-You will required to implement `initRoutes` and `initStates` method
+This is the bootstrap module for your application. Is only defined once in your application. You
+will required to implement `initRoutes` and `initStates` method
 
 * initRoutes - You will add all routes of the pages your module will use
 
 * initStates - You will add all states you will use in your module
 
-
 ```dart
 
-class MyApp extends MainModuleAdapter{
+class MyApp extends MainModuleAdapter {
   @override
-  void initRoutes(String moduleName) {
-      // TODO: implement initRoutes
-    }
-  
-    @override
-    void initStates(String moduleName) {
-    // TODO: implement initStates
-  }
+  List<RouterAdapter> initRoutes(String moduleName) => [];
+
+  @override
+  List<StateAdapter> initStates(String moduleName) => [];
 
 }
 
 ```
-    
+
 ### ChildModule
 
-This is the feature module to enclose your specific business logic. Your will required to impelement the following methods
+This is the feature module to enclose your specific business logic. Your will required to implement
+the following methods.
 
 * initRoutes - You will add all routes of the pages your module will use
 
@@ -66,45 +62,39 @@ This is the feature module to enclose your specific business logic. Your will re
 
 * moduleName - This will return your module name, name can be any `String` of your choice
 
-
 ```dart
 
-class MyApp extends ChildModuleAdapter{
+class ProfileModule extends ChildModuleAdapter {
   @override
-  void initRoutes(String moduleName) {
-      // TODO: implement initRoutes
-    }
-  
-    @override
-    void initStates(String moduleName) {
-    // TODO: implement initStates
-  }
+  List<RouterAdapter> initRoutes(String moduleName) => [];
 
   @override
-  String moduleName() {
-    // TODO: implement moduleName
-    return 'your-module-name';
-  }
+  List<StateAdapter> initStates(String moduleName) => [];
+
+  @override
+  String moduleName() => 'profile-module';
 
 }
 ```
 
-
 ## Page
 
-Page is what your see presented by your mobile phone. i.e  login page. Page belongs to a specific module and characterised with `url` to navigate to. Page can have one or more components which make the whole page functional. To create a page you extend `BFastUIPage` and you will required to implement `build` method which return a `Widget` represent that page.
+Page is what your see presented by your mobile phone. i.e login page. Page belongs to a specific
+module and characterised with `url` to navigate to. Page can have one or more components which make
+the whole page functional. To create a page you extend `PageAdapter` and you will required to
+implement `build` method which return a `Widget` represent that page.
 
-* build(var args) - your must provide implementation for this method. `args` parameter your will use it to extract information of that page i.e url parameters. `args` has the following properties
+* build(var args) - your must provide implementation for this method. `args` has the following properties
 
     ```dart
     final Map<String, dynamic> params;
-    final dynamic data;  
+    final Map<String, dynamic> queryParams;
+    final dynamic data;
     ```
-
 
 ```dart
 
-class MyPage extends PageAdapter{
+class MyPage extends PageAdapter {
   @override
   Widget build(var args) {
     // TODO: implement build
@@ -116,24 +106,46 @@ class MyPage extends PageAdapter{
 
 ## State
 
-State call information of the current view of your page ( s ).
-State is a `ChangeNotifier` class to be used with provider state management under the hood.
+State call information of the current view of your page ( s ). State is a `ChangeNotifier` class to
+be used with provider state management under the hood.
 
 ```dart
-class MyState extends StateAdapter{
-  
+class MyState extends StateAdapter {
 }
 ```
 
 to notify listerner for changes your will just call `notifyListeners()`
-as you would in `ChangeNotifier` class.
+as you would in `ChangeNotifier` class. You can use a state with `active widget` either consumer or selector. 
+We provider factor method to produce either consumer widget or selector component.
+
+```dart
+class MyHomePage extends PageAdapter {
+  @override
+  Widget build(args) {
+    return Scaffold(
+      body: Container(
+        color: Colors.red,
+        child: Column(
+          children: [
+            consumerComponent<MyState>(
+              builder: (context, state) => Text('${state.count}'),
+            ),
+            selectorComponent<MyState, int>(
+              selector: (state) => state.count,
+              builder: (c, data) => Text('$data'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
 
 ## Route
 
-A Route carry information of where to navigate to in your application and whether
-to allow someone access or not. You can navigate to another Page or Module.
-
-
+A Route carry information of where to navigate to in your application and whether to allow someone
+access or not. You can navigate to another Page or Module.
 
 ### Route Guard
 
@@ -141,7 +153,7 @@ To create a route guard
 
 ```dart
 
-class MyRouteAuthGuard extends RouterGuardAdapter{
+class MyRouteAuthGuard extends RouterGuardAdapter {
   @override
   Future<bool> canActivate(String url) {
     // TODO: implement canActivate
@@ -150,64 +162,82 @@ class MyRouteAuthGuard extends RouterGuardAdapter{
 }
 ```
 
-when `canActivate` resolve to `true` the page or a module someone navigate to
-will be activated otherwise will return to previous route if available
+when `canActivate` resolve to `true` the page or a module someone navigate to will be activated
+otherwise will return to previous route if available
 
-
-## Example
+## Complete Application Example
 
 ```dart
+import 'package:bfastui/adapters/main_module.dart';
+import 'package:bfastui/adapters/page.dart';
+import 'package:bfastui/adapters/router.dart';
+import 'package:bfastui/adapters/state.dart';
+import 'package:bfastui/controllers/component.dart';
+import 'package:bfastui/controllers/module.dart';
+import 'package:flutter/material.dart';
 
-class MyHomePage extends PageAdapter{
+class MyHomePage extends PageAdapter {
   @override
   Widget build(args) {
     return Scaffold(
       body: Container(
         color: Colors.red,
+        child: Column(
+          children: [
+            consumerComponent<MyState>(
+              builder: (c, state) => Text('${state?.count}'),
+            ),
+            selectorComponent<MyState, int>(
+              selector: (s) => s?.count ?? 0,
+              builder: (c, data) => Text('$data'),
+            )
+          ],
+        ),
       ),
     );
   }
-
 }
 
-class MyState extends StateAdapter{
+class MyState extends StateAdapter {
   int count = 0;
 
-  increase(){
+  increase() {
     count += 1;
     notifyListeners();
   }
-   decrement(){
+
+  decrement() {
     count -= 1;
     notifyListeners();
   }
-}
 
-class MyAppModule extends MainModuleAdapter{
   @override
-  void initRoutes(String moduleName) {
-      BFastUI.navigation(moduleName: moduleName)
-      .addRoute(RouterAdapter('/home', page: (content,args)=>MyHomePage()));
-
-    }
-  
-    @override
-    void initStates(String moduleName) {
-      BFastUI
-      .states(moduleName: moduleName)
-      .addState((i) => MyState());
-  }
-
+  void onDispose() {}
 }
 
+class MyAppModule extends MainModuleAdapter {
+  @override
+  List<RouterAdapter> initRoutes(String moduleName) => [
+    RouterAdapter('/home', page: (c, _) => MyHomePage()),
+  ];
 
-void main(){
+  @override
+  List<StateAdapter> initStates(String moduleName) => [
+    MyState(),
+  ];
+}
+
+void main() {
   runApp(
-    BFastUI.module(module: MyAppModule(), component: MaterialApp(
-        initialPath: '/home'
-    )).start()
+    bfastUiApp(
+      module: MyAppModule(),
+      component: MaterialApp(
+        initialRoute: '/home',
+      ),
+    ),
   );
 }
+
 
 ```
 

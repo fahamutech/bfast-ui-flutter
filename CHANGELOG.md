@@ -1,4 +1,10 @@
 #
+
+## [1.3.0]
+1. Update to null-safe code
+2. Improve code readability
+3. remove BFastUI helper class and access code directly
+
 ## [1.2.0]
 
 Update `flutter_modular` package to 4.3.0
